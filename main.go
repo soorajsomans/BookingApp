@@ -32,7 +32,7 @@ func main() {
 			continue
 		}
 		bookTickets(userTickets, firstName, lastName, email)
-		sendTicket(userTickets, firstName, lastName, email)
+		go sendTicket(userTickets, firstName, lastName, email)
 		//fmt.Printf("User Name %v \nNo of tickets booked %v \n", userName, userTickets)
 		firstNames := getFirstNames()
 		fmt.Printf("First Names of bookings %v\n", firstNames)
