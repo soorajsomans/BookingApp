@@ -1,6 +1,7 @@
 package main
 
 import (
+	validator "BookingApp/validators"
 	"fmt"
 	"strings"
 )
@@ -18,7 +19,7 @@ func main() {
 	for {
 
 		firstName, lastName, email, userTickets := getUserInput()
-		if !validateUserInputs(firstName, lastName, email, userTickets) {
+		if !validator.ValidateUserInputs(firstName, lastName, email, userTickets, remainingTickets) {
 			continue
 		}
 		bookTickets(userTickets, firstName, lastName, email)
@@ -50,26 +51,6 @@ func getFirstNames() []string {
 	return firstNames
 }
 
-func validateUserInputs(firstName string, lastName string, email string, userTickets uint) bool {
-	isValidName := len(firstName) >= 2 && len(lastName) >= 2
-	isValidEmail := strings.Contains(email, "@")
-	isValidTicket := userTickets > 0 && userTickets <= remainingTickets
-	isValidUserInput := true
-	if !isValidName {
-		fmt.Println("Invalid Name")
-		isValidUserInput = false
-	}
-	if !isValidEmail {
-		fmt.Println("Invalid Email")
-		isValidUserInput = false
-	}
-	if !isValidTicket {
-		fmt.Println("Invalid Ticket")
-		isValidUserInput = false
-	}
-	return isValidUserInput
-}
-
 func getUserInput() (string, string, string, uint) {
 	var firstName string
 	var lastName string
@@ -88,7 +69,7 @@ func getUserInput() (string, string, string, uint) {
 	fmt.Print("Enter no of tickets you want :")
 	fmt.Scan(&userTickets)
 
-	return firstName, lastName, lastName, userTickets
+	return firstName, lastName, email, userTickets
 }
 func bookTickets(userTickets uint, firstName string, lastName string, email string) {
 	remainingTickets = remainingTickets - userTickets
